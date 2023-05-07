@@ -1,20 +1,49 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import Home from '../views/Home.vue'
+import Home from '../views/Home.vue' //后台首页
+import Layout from '../views/Layout/Layout.vue'
+const GoodsList = () => import(/* webpackChunkName: "GoodsList" */ '../views/Goods/GoodsList.vue')
+const GoodsAdd = () => import(/* webpackChunkName: "GoodsAdd" */ '../views/Goods/GoodsAdd.vue')
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: '/login',
+    name: 'About',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/',
+    name: 'Home',
+    component: Layout,
+    redirect:"/home", //跳到首页
+
+    // chldren 里面的内容会显示在 layout 页面中的 router-view 
+    children:[
+      {
+        path: '/home',
+        name: 'home_page',
+        component:Home
+      }
+    ]
+  },
+  // 商品管理
+  {
+    path:"/goods",
+    name: 'goods',
+    component: Layout,
+    children:[
+      {
+        path: '/goods_list',
+        name: 'goods_list',
+        component:GoodsList
+      },
+      {
+        path: '/goods_add',
+        name: 'goods_add',
+        component:GoodsAdd
+      }
+    ]
   }
+  
 ]
 
 const router = createRouter({
