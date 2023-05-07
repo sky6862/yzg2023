@@ -9,11 +9,11 @@
           ref="ruleFormRef"
         >
           <el-form-item label="账号" prop="account">
-            <el-input v-model="form.account"  :suffix-icon="Search"/>
+            <el-input v-model="form.account" :prefix-icon="User"/>
           </el-form-item>
     
-          <el-form-item label="密码" prop="password">
-            <el-input v-model="form.password" />
+          <el-form-item label="密码" prop="password" >
+            <el-input v-model="form.password" :prefix-icon="Lock" show-password/>
           </el-form-item>
 
           <el-form-item>
@@ -26,8 +26,8 @@
 </template>
 
 <script setup lang="ts">
-  import {reactive,ref,toRefs} from 'vue'
-  import {Search} from '@element-plus/icons-vue'
+  import {reactive,ref} from 'vue'
+  import {User,Lock,View,Hide} from '@element-plus/icons-vue'
   import type { FormInstance, FormRules } from 'element-plus'
   import {login} from '../api/account';
   import { ElMessage } from 'element-plus'
@@ -69,6 +69,11 @@
             type: 'success',
           })
           router.push({name:"Home"})
+        }else{
+          ElMessage({
+            message: r.msg,
+            type: 'warning',
+          })
         }
       } else {
         console.log('error submit!', fields)
@@ -89,5 +94,29 @@
   width: 100%;
   background: url(../assets/bg.png);
   background-size: cover;
+  
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  .loginForm{
+    // border:1px solid red;
+    box-shadow: 0 0 10px 5px #4a4949;
+    width:530px;
+    height:280px;
+    color:#ffffff;
+    padding-right: 120px;
+
+    h2{
+      text-align:center;
+    }
+    /deep/.el-form-item__label{
+      color:#ffffff;
+    }
+
+    .el-form-item__label{
+      width: 300px;
+    }
+  }
 }
 </style>
