@@ -31,13 +31,16 @@ const routes: Array<RouteRecordRaw> = [
     name: 'goods',
     component: Layout,
     children:[
+      // 子路由中不要带/,/表示根目录
       {
-        path: '/goods_list',
+        // /goods/goods_list
+        path: 'goods_list',
         name: 'goods_list',
         component:GoodsList
       },
       {
-        path: '/goods_add',
+        // /goods/goods_add
+        path: 'goods_add',
         name: 'goods_add',
         component:GoodsAdd
       }
