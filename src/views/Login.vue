@@ -29,7 +29,7 @@
   import {reactive,ref} from 'vue'
   import {User,Lock,View,Hide} from '@element-plus/icons-vue'
   import type { FormInstance, FormRules } from 'element-plus'
-  import {login} from '../api/account';
+  import {login} from '../api/account.js';
   import { ElMessage } from 'element-plus'
   import { useRouter } from 'vue-router'
 
