@@ -15,6 +15,10 @@ const instance = axios.create({
 instance.interceptors.request.use(
   function (config) {
     // 在发送请求之前做些什么
+    let token = localStorage.getItem("token");//登录成功后保存token
+    if (token) {
+      config.headers.Authorization = token; // 统一在请求头携带token
+    }
     return config;
   }, 
   function (error) {
