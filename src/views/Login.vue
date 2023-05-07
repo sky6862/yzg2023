@@ -6,18 +6,18 @@
         </el-icon>
 
           <h2>登录</h2>
-          <el-form :model="form" label-width="120px">
+          <el-form :model="form" label-width="120px"  ref="ruleFormRef">
 
             <el-form-item label="Activity name">
-              <el-input v-model="form.username"  :suffix-icon="Search"/>
+              <el-input v-model="form.account"  :suffix-icon="Search"/>
             </el-form-item>
       
             <el-form-item label="Activity name">
-              <el-input v-model="form.pwd" />
+              <el-input v-model="form.password" />
             </el-form-item>
 
             <el-form-item>
-              <el-button type="primary" @click="onSubmit">登录</el-button>
+              <el-button type="primary" @click="submitForm(ruleFormRef)">登录</el-button>
               <el-button>重置</el-button>
             </el-form-item>
         </el-form>
@@ -25,18 +25,31 @@
   </div>
 </template>
 
-<script setup>
-  import {reactive} from 'vue'
+<script setup lang="ts">
+  import {reactive,ref,toRefs} from 'vue'
   import {Search} from '@element-plus/icons-vue'
+  import type { FormInstance, FormRules } from 'element-plus'
+  import {login} from '../api/account.js';
   
   let form = reactive({
-    username:"",
-    pwd:""
+    account:"",
+    password:""
   })
 
-  const onSubmit = ()=>{
-    console.log('准备登录')
-  }
+  const ruleFormRef = ref<FormInstance>()
+  const submitForm = async (formEl: FormInstance | undefined) => {
+    if (!formEl) return;
+    // 
+    await formEl.validate(async (valid, fields) => {
+      if (valid) {
+        console.log('submit!')
+        let r = await login(form)
+        console.log(r)
+      } else {
+        console.log('error submit!', fields)
+      }
+    })
+}
 </script>
 
 <style lang="less" scoped>
