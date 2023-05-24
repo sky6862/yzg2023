@@ -1,8 +1,11 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+
 import Home from '../views/Home.vue' //后台首页
 import Layout from '../views/Layout/Layout.vue'
 const GoodsList = () => import(/* webpackChunkName: "GoodsList" */ '../views/Goods/GoodsList.vue')
 const GoodsAdd = () => import(/* webpackChunkName: "GoodsAdd" */ '../views/Goods/GoodsAdd.vue')
+const AccountList = () => import(/* webpackChunkName: "GoodsList" */ '../views/Account/AccountList.vue')
+const AccountAdd = () => import(/* webpackChunkName: "GoodsList" */ '../views/Account/AccountAdd.vue')
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -43,6 +46,27 @@ const routes: Array<RouteRecordRaw> = [
         path: 'goods_add',
         name: 'goods_add',
         component:GoodsAdd
+      }
+    ]
+  },
+   // 账号管理
+   {
+    path:"/account",
+    name: 'account',
+    component: Layout,
+    children:[
+      // 子路由中不要带/,/表示根目录
+      {
+        // /account/list
+        path: 'account_list',
+        name: 'account_list',
+        component:AccountList
+      },
+      {
+        // /goods/goods_add
+        path: 'account_add',
+        name: 'account_add',
+        component:AccountAdd
       }
     ]
   }

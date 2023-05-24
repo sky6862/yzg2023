@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-      右侧内容
+      后台首页
   </div>
 </template>
 

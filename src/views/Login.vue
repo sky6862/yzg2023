@@ -110,12 +110,19 @@
     h2{
       text-align:center;
     }
+
+    /deep/.el-input__wrapper{
+      background: transparent;
+      
+    }
     /deep/.el-form-item__label{
       color:#ffffff;
-    }
-
-    .el-form-item__label{
       width: 300px;
+    }
+    /deep/.el-input__prefix,
+    /deep/.el-input__suffix,
+    /deep/.el-input__inner{
+      color:#ffffff!important;
     }
   }
 }

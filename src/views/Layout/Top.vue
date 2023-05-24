@@ -1,10 +1,7 @@
 <template>
-    <div>
-       上边<br>
-       <input type="text" v-model="msg">{{ msg }}
-       <p @click="handleClick">点我</p>
-       <HelloWorld></HelloWorld>
-    </div>
+    <header>
+        顶部
+    </header>
 </template>
 
 <script>
