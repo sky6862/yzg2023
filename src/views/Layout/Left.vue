@@ -1,12 +1,22 @@
 <template>
-  <div>
-    <el-radio-group v-model="isCollapse" style="margin-bottom: 20px">
-      <el-radio-button :label="false">expand</el-radio-button>
-      <el-radio-button :label="true">collapse</el-radio-button>
-    </el-radio-group>
-
-    <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" @open="handleOpen"
-      @close="handleClose" router>
+  <div class="menu_box">
+    <!-- 
+      radio-button用法：
+      https://element-plus.org/zh-CN/component/radio.html#%E7%A6%81%E7%94%A8%E7%8A%B6%E6%80%81
+     -->
+    <!-- <el-radio-group v-model="isCollapse" style="margin-bottom: 20px">
+      <el-radio-button :label="false">展开</el-radio-button>
+      <el-radio-button :label="true">收起</el-radio-button>
+    </el-radio-group> -->
+    <el-menu 
+      default-active="2" 
+      class="el-menu-vertical-demo" 
+      :collapse="isCollapse" 
+      @open="handleOpen"
+      @close="handleClose" 
+      router
+      v-bind:class="isCollapse?hide:''"
+    >
       <el-menu-item index="/">
         <el-icon><icon-menu /></el-icon>
         <template #title>首页</template>
@@ -32,7 +42,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref,computed,toRef} from 'vue'
+import {useStore} from 'vuex'
 import {
   Document,
   Menu as IconMenu,
@@ -40,7 +51,12 @@ import {
   Setting,
 } from '@element-plus/icons-vue'
 
-const isCollapse = ref(false) //是否折叠，默认否
+// const isCollapse = ref(false) //是否折叠，默认否
+// m01:交给store中数据来控制，为是两个页面(组件)来控制的
+let store = useStore()
+// 使用计算属性，简化写法
+let isCollapse = computed(()=>store.state.collapse_menu)
+
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
 }
@@ -50,5 +66,15 @@ const handleClose = (key: string, keyPath: string[]) => {
 </script>
 
 <style scoped>
-/* Your component styles here */
+/* m07:菜单宽度 */
+/* 修改菜单宽度 */
+.el-menu{
+  width: 200px;
+  border:0;
+}
+
+/* 折叠的时候宽度 */
+.hide .el-menu{
+  width: 64px;
+}
 </style>

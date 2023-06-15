@@ -1,6 +1,8 @@
 <template>
    <!-- <Suspense> -->
      <div>
+         <h2>账号列表</h2>
+         <hr>
          {{ list }}
      </div>
    <!-- </Suspense> -->
