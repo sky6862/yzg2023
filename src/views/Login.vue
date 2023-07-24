@@ -35,13 +35,30 @@
   import {ACC_REG,PWD_REG} from '../utils/reg'
 
   const router = useRouter()
-
   let form = reactive({
     account:"",
     password:""
   })
 
-  
+  const arr = reactive([
+    {
+      "speed": 0.5,
+      "name": "0.5 倍速"
+    },
+    {
+      "speed": 1, 
+      "name": "正常速度"
+    },
+    {
+      "speed": 1.5,
+      "name": "1.5 倍速" 
+    },
+    {
+      "speed": 2,
+      "name": "2 倍速"
+    }
+  ])
+  console.log(arr)
 
   const ruleFormRef = ref<FormInstance>()
 
@@ -57,8 +74,8 @@
       }
     }
   }
-
   // 验证函数2
+  // rule: any, value: any, callback: any 参数是固定的，value表示表单的值1
   const validatePass = (rule: any, value: any, callback: any) => {
     if (value === '') {
       callback(new Error('请输入密码'))
