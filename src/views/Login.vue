@@ -1,43 +1,38 @@
 <template>
   <div class="login">
     <div class="loginForm">
-        <h2>登录</h2>
-        <el-form 
-          :model="form" 
-          :rules="rules"
-          label-width="120px"  
-          ref="ruleFormRef"
-        >
-          <el-form-item label="账号" prop="account">
-            <el-input v-model="form.account" :prefix-icon="User"/>
-          </el-form-item>
-    
-          <el-form-item label="密码" prop="password" >
-            <el-input v-model="form.password" :prefix-icon="Lock" show-password/>
-          </el-form-item>
+      <h2>登录</h2>
+      <el-form :model="form" :rules="rules" label-width="120px" ref="ruleFormRef">
+        <el-form-item label="账号" prop="account">
+          <el-input v-model="form.account" :prefix-icon="User" />
+        </el-form-item>
 
-          <el-form-item>
-            <el-button type="primary" @click="submitForm(ruleFormRef)">登录</el-button>
-            <el-button @click="resetForm(ruleFormRef)">重置</el-button>
-          </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input v-model="form.password" :prefix-icon="Lock" show-password />
+        </el-form-item>
+
+        <el-form-item>
+          <el-button type="primary" @click="submitForm(ruleFormRef)">登录</el-button>
+          <el-button @click="resetForm(ruleFormRef)">重置</el-button>
+        </el-form-item>
       </el-form>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import {reactive,ref} from 'vue'
-  import {User,Lock,View,Hide} from '@element-plus/icons-vue'
+  import { reactive, ref } from 'vue'
+  import { User, Lock, View, Hide } from '@element-plus/icons-vue'
   import type { FormInstance, FormRules } from 'element-plus'
-  import {login} from '../api/account.js';
+  import { login } from '../api/account.js';
   import { ElMessage } from 'element-plus'
   import { useRouter } from 'vue-router'
-  import {ACC_REG,PWD_REG} from '../utils/reg'
+  import { ACC_REG, PWD_REG } from '../utils/reg'
 
   const router = useRouter()
   let form = reactive({
-    account:"",
-    password:""
+    account: "",
+    password: ""
   })
 
   // main 分支加一个注释
@@ -47,12 +42,12 @@
       "name": "0.5 倍速"
     },
     {
-      "speed": 1, 
+      "speed": 1,
       "name": "正常速度"
     },
     {
       "speed": 1.5,
-      "name": "1.5 倍速" 
+      "name": "1.5 倍速"
     },
     {
       "speed": 2,
@@ -61,7 +56,7 @@
   ])
   console.log(arr)
 
-  const ruleFormRef = ref<FormInstance>()
+  const ruleFormRef = ref < FormInstance > ()
 
   // 验证函数1
   const validateAccount = (rule: any, value: any, callback: any) => {
@@ -80,7 +75,7 @@
   const validatePass = (rule: any, value: any, callback: any) => {
     if (value === '') {
       callback(new Error('请输入密码'))
-    }else {
+    } else {
       if (!PWD_REG.test(value)) {
         callback(new Error('密码格式不正确,3到12位'))
       } else {
@@ -89,15 +84,15 @@
     }
   }
 
-  const rules = reactive<FormRules>({
-   /*  account: [
-      { required: true, message: '请输入账号', trigger: 'blur' },
-      { min: 3, max: 5, message: '长度在3-5', trigger: 'blur' },
-    ],
-    password: [
-      { required: true, message: '请输入密码', trigger: 'blur' },
-      { min: 3, max: 5, message: '长度在3-5', trigger: 'blur' },
-    ], */
+  const rules = reactive < FormRules > ({
+    /*  account: [
+       { required: true, message: '请输入账号', trigger: 'blur' },
+       { min: 3, max: 5, message: '长度在3-5', trigger: 'blur' },
+     ],
+     password: [
+       { required: true, message: '请输入密码', trigger: 'blur' },
+       { min: 3, max: 5, message: '长度在3-5', trigger: 'blur' },
+     ], */
     account: [{ validator: validateAccount, trigger: 'blur' }],
     password: [{ validator: validatePass, trigger: 'blur' }],
   })
@@ -110,15 +105,15 @@
         console.log('submit!')
         let r = await login(form)
         console.log(r)
-        if(r.code == 0){
-          localStorage.setItem("token",r.token)
-          localStorage.setItem("role",r.role)
+        if (r.code == 0) {
+          localStorage.setItem("token", r.token)
+          localStorage.setItem("role", r.role)
           ElMessage({
             message: r.msg,
             type: 'success',
           })
-          router.push({name:"Home"})
-        }else{
+          router.push({ name: "Home" })
+        } else {
           ElMessage({
             message: r.msg,
             type: 'warning',
@@ -138,41 +133,43 @@
 </script>
 
 <style lang="less" scoped>
-.login{
-  height: 100vh;
-  width: 100%;
-  background: url(../assets/bg.png);
-  background-size: cover;
-  
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  .login {
+    height: 100vh;
+    width: 100%;
+    background: url(../assets/bg.png);
+    background-size: cover;
 
-  .loginForm{
-    // border:1px solid red;
-    box-shadow: 0 0 10px 5px #4a4949;
-    width:530px;
-    height:280px;
-    color:#ffffff;
-    padding-right: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    h2{
-      text-align:center;
-    }
+    .loginForm {
+      // border:1px solid red;
+      box-shadow: 0 0 10px 5px #4a4949;
+      width: 530px;
+      height: 280px;
+      color: #ffffff;
+      padding-right: 120px;
 
-    /deep/.el-input__wrapper{
-      background: transparent;
-      
-    }
-    /deep/.el-form-item__label{
-      color:#ffffff;
-      width: 300px;
-    }
-    /deep/.el-input__prefix,
-    /deep/.el-input__suffix,
-    /deep/.el-input__inner{
-      color:#ffffff!important;
+      h2 {
+        text-align: center;
+      }
+
+      /deep/.el-input__wrapper {
+        background: transparent;
+
+      }
+
+      /deep/.el-form-item__label {
+        color: #ffffff;
+        width: 300px;
+      }
+
+      /deep/.el-input__prefix,
+      /deep/.el-input__suffix,
+      /deep/.el-input__inner {
+        color: #ffffff !important;
+      }
     }
   }
-}
 </style>
