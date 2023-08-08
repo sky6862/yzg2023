@@ -6,8 +6,10 @@
     <ul class="music">
       <li v-for="(v,k) in list" :key="'list'+k">
         <p>{{v.text}}</p>
-        <!--隐藏，就不写controls,preload 预加数，提高速度-->
-        <audio :src="v.url"  :id="'m'+k" preload="auto"></audio>
+        <!--隐藏，就不写controls,preload 预加数，提高速度
+        dom 03 :ref="el =>{domList[k] = el}" k 是当前循环的索引
+        -->
+        <audio :src="v.url"  :id="'m'+k" preload="auto" :ref="el =>{domList[k] = el}"></audio>
         <img :src="v.status == true ? play : close" @click="play_audio(k)">
       </li>
     </ul>
@@ -70,12 +72,20 @@
     }
   ])
 
-  // https://blog.csdn.net/weixin_43233914/article/details/108776124
+  // dom 01
+  const domList = ref({})
+
   const play_audio = (k)=>{
     console.log(k)
     list[k].status = !list[k].status
  
-    let m =  document.querySelector("#m"+k);
+    console.log(domList.value)
+    
+    // let m =  document.querySelector("#m"+k);
+    // dom 02
+    let m = domList.value[k]
+    console.log(m)
+
     if(m.paused){
       m.load();//解决只播放一次的问题
       m.play();
