@@ -73,7 +73,12 @@
   ])
 
   // dom 01
-  const domList = ref({})
+  // const domList = ref({})
+  // dom 04 使用ts 自定义类型
+  interface DomElementList {
+    [index: number]: Element;
+  }
+  const domList = ref<Array<DomElementList>>({})
 
   const play_audio = (k)=>{
     console.log(k)
@@ -83,7 +88,7 @@
     
     // let m =  document.querySelector("#m"+k);
     // dom 02
-    let m = domList.value[k]
+    let m:DomElementList = domList.value[k]
     console.log(m)
 
     if(m.paused){
